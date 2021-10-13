@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="message">
+      <h2 data-cy="messageDetailsHeading"><span jhiTranslate="dhApp.message.detail.title">Message</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ message.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.message.creationDate">Creation Date</span></dt>
+        <dd>
+          <span>{{ message.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.message.messageText">Message Text</span></dt>
+        <dd>
+          <span>{{ message.messageText }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.message.isDelivered">Is Delivered</span></dt>
+        <dd>
+          <span>{{ message.isDelivered }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.message.sender">Sender</span></dt>
+        <dd>
+          <div *ngIf="message.sender">
+            <a [routerLink]="['/appuser', message.sender?.id, 'view']">{{ message.sender?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="dhApp.message.receiver">Receiver</span></dt>
+        <dd>
+          <div *ngIf="message.receiver">
+            <a [routerLink]="['/appuser', message.receiver?.id, 'view']">{{ message.receiver?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/message', message.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

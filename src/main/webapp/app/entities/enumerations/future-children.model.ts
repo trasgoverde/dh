@@ -1,0 +1,7 @@
+export enum FutureChildren {
+  NA = 'NA',
+
+  YES = 'YES',
+
+  NO = 'NO',
+}

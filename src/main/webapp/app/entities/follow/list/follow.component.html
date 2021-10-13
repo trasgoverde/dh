@@ -1,0 +1,145 @@
+<div>
+  <h2 id="page-heading" data-cy="FollowHeading">
+    <span jhiTranslate="dhApp.follow.home.title">Follows</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="dhApp.follow.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-follow"
+        [routerLink]="['/follow/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="dhApp.follow.home.createLabel"> Create a new Follow </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'dhApp.follow.home.search' | translate }}"
+          />
+
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon icon="search"></fa-icon>
+          </button>
+
+          <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="follows?.length === 0">
+    <span jhiTranslate="dhApp.follow.home.notFound">No follows found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="follows && follows.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="creationDate">
+            <span jhiTranslate="dhApp.follow.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="followed.id">
+            <span jhiTranslate="dhApp.follow.followed">Followed</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="following.id">
+            <span jhiTranslate="dhApp.follow.following">Following</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="cfollowed.id">
+            <span jhiTranslate="dhApp.follow.cfollowed">Cfollowed</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="cfollowing.id">
+            <span jhiTranslate="dhApp.follow.cfollowing">Cfollowing</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let follow of follows; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/follow', follow.id, 'view']">{{ follow.id }}</a>
+          </td>
+          <td>{{ follow.creationDate | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="follow.followed">
+              <a [routerLink]="['/appuser', follow.followed?.id, 'view']">{{ follow.followed?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="follow.following">
+              <a [routerLink]="['/appuser', follow.following?.id, 'view']">{{ follow.following?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="follow.cfollowed">
+              <a [routerLink]="['/community', follow.cfollowed?.id, 'view']">{{ follow.cfollowed?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="follow.cfollowing">
+              <a [routerLink]="['/community', follow.cfollowing?.id, 'view']">{{ follow.cfollowing?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/follow', follow.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/follow', follow.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(follow)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="follows && follows.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

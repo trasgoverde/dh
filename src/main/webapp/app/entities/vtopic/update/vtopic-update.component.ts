@@ -1,0 +1,124 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+
+import * as dayjs from 'dayjs';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
+
+import { IVtopic, Vtopic } from '../vtopic.model';
+import { VtopicService } from '../service/vtopic.service';
+import { IAppuser } from 'app/entities/appuser/appuser.model';
+import { AppuserService } from 'app/entities/appuser/service/appuser.service';
+
+@Component({
+  selector: 'jhi-vtopic-update',
+  templateUrl: './vtopic-update.component.html',
+})
+export class VtopicUpdateComponent implements OnInit {
+  isSaving = false;
+
+  appusersSharedCollection: IAppuser[] = [];
+
+  editForm = this.fb.group({
+    id: [],
+    creationDate: [null, [Validators.required]],
+    vtopicTitle: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+    vtopicDescription: [null, [Validators.minLength(2), Validators.maxLength(250)]],
+    appuser: [null, Validators.required],
+  });
+
+  constructor(
+    protected vtopicService: VtopicService,
+    protected appuserService: AppuserService,
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ vtopic }) => {
+      if (vtopic.id === undefined) {
+        const today = dayjs().startOf('day');
+        vtopic.creationDate = today;
+      }
+
+      this.updateForm(vtopic);
+
+      this.loadRelationshipsOptions();
+    });
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+
+  save(): void {
+    this.isSaving = true;
+    const vtopic = this.createFromForm();
+    if (vtopic.id !== undefined) {
+      this.subscribeToSaveResponse(this.vtopicService.update(vtopic));
+    } else {
+      this.subscribeToSaveResponse(this.vtopicService.create(vtopic));
+    }
+  }
+
+  trackAppuserById(index: number, item: IAppuser): number {
+    return item.id!;
+  }
+
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IVtopic>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+  }
+
+  protected onSaveSuccess(): void {
+    this.previousState();
+  }
+
+  protected onSaveError(): void {
+    // Api for inheritance.
+  }
+
+  protected onSaveFinalize(): void {
+    this.isSaving = false;
+  }
+
+  protected updateForm(vtopic: IVtopic): void {
+    this.editForm.patchValue({
+      id: vtopic.id,
+      creationDate: vtopic.creationDate ? vtopic.creationDate.format(DATE_TIME_FORMAT) : null,
+      vtopicTitle: vtopic.vtopicTitle,
+      vtopicDescription: vtopic.vtopicDescription,
+      appuser: vtopic.appuser,
+    });
+
+    this.appusersSharedCollection = this.appuserService.addAppuserToCollectionIfMissing(this.appusersSharedCollection, vtopic.appuser);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.appuserService
+      .query()
+      .pipe(map((res: HttpResponse<IAppuser[]>) => res.body ?? []))
+      .pipe(
+        map((appusers: IAppuser[]) => this.appuserService.addAppuserToCollectionIfMissing(appusers, this.editForm.get('appuser')!.value))
+      )
+      .subscribe((appusers: IAppuser[]) => (this.appusersSharedCollection = appusers));
+  }
+
+  protected createFromForm(): IVtopic {
+    return {
+      ...new Vtopic(),
+      id: this.editForm.get(['id'])!.value,
+      creationDate: this.editForm.get(['creationDate'])!.value
+        ? dayjs(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      vtopicTitle: this.editForm.get(['vtopicTitle'])!.value,
+      vtopicDescription: this.editForm.get(['vtopicDescription'])!.value,
+      appuser: this.editForm.get(['appuser'])!.value,
+    };
+  }
+}

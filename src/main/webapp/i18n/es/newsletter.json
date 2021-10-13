@@ -1,0 +1,26 @@
+{
+  "dhApp": {
+    "newsletter": {
+      "home": {
+        "title": "Newsletters",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Newsletter",
+        "createOrEditLabel": "Crear o editar Newsletter",
+        "search": "Buscar Newsletter",
+        "notFound": "Ningún Newsletters encontrado"
+      },
+      "created": "Un nuevo Newsletter ha sido creado con el identificador {{ param }}",
+      "updated": "Un Newsletter ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Newsletter ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Newsletter {{ id }}?"
+      },
+      "detail": {
+        "title": "Newsletter"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "email": "Email"
+    }
+  }
+}

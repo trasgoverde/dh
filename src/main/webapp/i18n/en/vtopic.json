@@ -1,0 +1,29 @@
+{
+  "dhApp": {
+    "vtopic": {
+      "home": {
+        "title": "Vtopics",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Vtopic",
+        "createOrEditLabel": "Create or edit a Vtopic",
+        "search": "Search for Vtopic",
+        "notFound": "No Vtopics found"
+      },
+      "created": "A new Vtopic is created with identifier {{ param }}",
+      "updated": "A Vtopic is updated with identifier {{ param }}",
+      "deleted": "A Vtopic is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Vtopic {{ id }}?"
+      },
+      "detail": {
+        "title": "Vtopic"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "vtopicTitle": "Vtopic Title",
+      "vtopicDescription": "Vtopic Description",
+      "vquestion": "Vquestion",
+      "appuser": "Appuser"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "dhApp": {
+    "vquestion": {
+      "home": {
+        "title": "Vquestions",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Vquestion",
+        "createOrEditLabel": "Crear o editar Vquestion",
+        "search": "Buscar Vquestion",
+        "notFound": "Ningún Vquestions encontrado"
+      },
+      "created": "Un nuevo Vquestion ha sido creado con el identificador {{ param }}",
+      "updated": "Un Vquestion ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Vquestion ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Vquestion {{ id }}?"
+      },
+      "detail": {
+        "title": "Vquestion"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "vquestion": "Vquestion",
+      "vquestionDescription": "Vquestion Description",
+      "vanswer": "Vanswer",
+      "vthumb": "Vthumb",
+      "appuser": "Appuser",
+      "vtopic": "Vtopic"
+    }
+  }
+}

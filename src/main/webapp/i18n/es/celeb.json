@@ -1,0 +1,26 @@
+{
+  "dhApp": {
+    "celeb": {
+      "home": {
+        "title": "Celebs",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Celeb",
+        "createOrEditLabel": "Crear o editar Celeb",
+        "search": "Buscar Celeb",
+        "notFound": "Ningún Celebs encontrado"
+      },
+      "created": "Un nuevo Celeb ha sido creado con el identificador {{ param }}",
+      "updated": "Un Celeb ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Celeb ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Celeb {{ id }}?"
+      },
+      "detail": {
+        "title": "Celeb"
+      },
+      "id": "ID",
+      "celebName": "Celeb Name",
+      "appuser": "Appuser"
+    }
+  }
+}

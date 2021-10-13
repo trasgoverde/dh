@@ -1,0 +1,218 @@
+<div>
+  <h2 id="page-heading" data-cy="AppprofileHeading">
+    <span jhiTranslate="dhApp.appprofile.home.title">Appprofiles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="dhApp.appprofile.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-appprofile"
+        [routerLink]="['/appprofile/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="dhApp.appprofile.home.createLabel"> Create a new Appprofile </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'dhApp.appprofile.home.search' | translate }}"
+          />
+
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon icon="search"></fa-icon>
+          </button>
+
+          <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="appprofiles?.length === 0">
+    <span jhiTranslate="dhApp.appprofile.home.notFound">No appprofiles found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="appprofiles && appprofiles.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="creationDate">
+            <span jhiTranslate="dhApp.appprofile.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="gender">
+            <span jhiTranslate="dhApp.appprofile.gender">Gender</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="phone">
+            <span jhiTranslate="dhApp.appprofile.phone">Phone</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="bio">
+            <span jhiTranslate="dhApp.appprofile.bio">Bio</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="facebook">
+            <span jhiTranslate="dhApp.appprofile.facebook">Facebook</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="twitter">
+            <span jhiTranslate="dhApp.appprofile.twitter">Twitter</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="linkedin">
+            <span jhiTranslate="dhApp.appprofile.linkedin">Linkedin</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="instagram">
+            <span jhiTranslate="dhApp.appprofile.instagram">Instagram</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="googlePlus">
+            <span jhiTranslate="dhApp.appprofile.googlePlus">Google Plus</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="birthdate">
+            <span jhiTranslate="dhApp.appprofile.birthdate">Birthdate</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="civilStatus">
+            <span jhiTranslate="dhApp.appprofile.civilStatus">Civil Status</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="lookingFor">
+            <span jhiTranslate="dhApp.appprofile.lookingFor">Looking For</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="purpose">
+            <span jhiTranslate="dhApp.appprofile.purpose">Purpose</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="physical">
+            <span jhiTranslate="dhApp.appprofile.physical">Physical</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="religion">
+            <span jhiTranslate="dhApp.appprofile.religion">Religion</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="ethnicGroup">
+            <span jhiTranslate="dhApp.appprofile.ethnicGroup">Ethnic Group</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="studies">
+            <span jhiTranslate="dhApp.appprofile.studies">Studies</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="sibblings">
+            <span jhiTranslate="dhApp.appprofile.sibblings">Sibblings</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="eyes">
+            <span jhiTranslate="dhApp.appprofile.eyes">Eyes</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="smoker">
+            <span jhiTranslate="dhApp.appprofile.smoker">Smoker</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="children">
+            <span jhiTranslate="dhApp.appprofile.children">Children</span> <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="futureChildren">
+            <span jhiTranslate="dhApp.appprofile.futureChildren">Future Children</span>
+            <fa-icon *ngIf="!currentSearch" icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="pet"><span jhiTranslate="dhApp.appprofile.pet">Pet</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="appuser.id">
+            <span jhiTranslate="dhApp.appprofile.appuser">Appuser</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appprofile of appprofiles; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/appprofile', appprofile.id, 'view']">{{ appprofile.id }}</a>
+          </td>
+          <td>{{ appprofile.creationDate | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'dhApp.Gender.' + appprofile.gender }}">{{ appprofile.gender }}</td>
+          <td>{{ appprofile.phone }}</td>
+          <td>{{ appprofile.bio }}</td>
+          <td>{{ appprofile.facebook }}</td>
+          <td>{{ appprofile.twitter }}</td>
+          <td>{{ appprofile.linkedin }}</td>
+          <td>{{ appprofile.instagram }}</td>
+          <td>{{ appprofile.googlePlus }}</td>
+          <td>{{ appprofile.birthdate | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'dhApp.CivilStatus.' + appprofile.civilStatus }}">{{ appprofile.civilStatus }}</td>
+          <td jhiTranslate="{{ 'dhApp.Gender.' + appprofile.lookingFor }}">{{ appprofile.lookingFor }}</td>
+          <td jhiTranslate="{{ 'dhApp.Purpose.' + appprofile.purpose }}">{{ appprofile.purpose }}</td>
+          <td jhiTranslate="{{ 'dhApp.Physical.' + appprofile.physical }}">{{ appprofile.physical }}</td>
+          <td jhiTranslate="{{ 'dhApp.Religion.' + appprofile.religion }}">{{ appprofile.religion }}</td>
+          <td jhiTranslate="{{ 'dhApp.EthnicGroup.' + appprofile.ethnicGroup }}">{{ appprofile.ethnicGroup }}</td>
+          <td jhiTranslate="{{ 'dhApp.Studies.' + appprofile.studies }}">{{ appprofile.studies }}</td>
+          <td>{{ appprofile.sibblings }}</td>
+          <td jhiTranslate="{{ 'dhApp.Eyes.' + appprofile.eyes }}">{{ appprofile.eyes }}</td>
+          <td jhiTranslate="{{ 'dhApp.Smoker.' + appprofile.smoker }}">{{ appprofile.smoker }}</td>
+          <td jhiTranslate="{{ 'dhApp.Children.' + appprofile.children }}">{{ appprofile.children }}</td>
+          <td jhiTranslate="{{ 'dhApp.FutureChildren.' + appprofile.futureChildren }}">{{ appprofile.futureChildren }}</td>
+          <td>{{ appprofile.pet }}</td>
+          <td>
+            <div *ngIf="appprofile.appuser">
+              <a [routerLink]="['/appuser', appprofile.appuser?.id, 'view']">{{ appprofile.appuser?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/appprofile', appprofile.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/appprofile', appprofile.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(appprofile)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="appprofiles && appprofiles.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+{
+  "dhApp": {
+    "calbum": {
+      "home": {
+        "title": "Calbums",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Calbum",
+        "createOrEditLabel": "Crear o editar Calbum",
+        "search": "Buscar Calbum",
+        "notFound": "Ningún Calbums encontrado"
+      },
+      "created": "Un nuevo Calbum ha sido creado con el identificador {{ param }}",
+      "updated": "Un Calbum ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Calbum ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Calbum {{ id }}?"
+      },
+      "detail": {
+        "title": "Calbum"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "title": "Title",
+      "photo": "Photo",
+      "community": "Community"
+    }
+  }
+}

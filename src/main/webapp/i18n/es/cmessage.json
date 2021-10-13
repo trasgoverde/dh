@@ -1,0 +1,29 @@
+{
+  "dhApp": {
+    "cmessage": {
+      "home": {
+        "title": "Cmessages",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Cmessage",
+        "createOrEditLabel": "Crear o editar Cmessage",
+        "search": "Buscar Cmessage",
+        "notFound": "Ningún Cmessages encontrado"
+      },
+      "created": "Un nuevo Cmessage ha sido creado con el identificador {{ param }}",
+      "updated": "Un Cmessage ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Cmessage ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Cmessage {{ id }}?"
+      },
+      "detail": {
+        "title": "Cmessage"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "messageText": "Message Text",
+      "isDelivered": "Is Delivered",
+      "csender": "Csender",
+      "creceiver": "Creceiver"
+    }
+  }
+}

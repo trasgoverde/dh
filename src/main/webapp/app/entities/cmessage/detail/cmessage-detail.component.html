@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="cmessage">
+      <h2 data-cy="cmessageDetailsHeading"><span jhiTranslate="dhApp.cmessage.detail.title">Cmessage</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ cmessage.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.cmessage.creationDate">Creation Date</span></dt>
+        <dd>
+          <span>{{ cmessage.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.cmessage.messageText">Message Text</span></dt>
+        <dd>
+          <span>{{ cmessage.messageText }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.cmessage.isDelivered">Is Delivered</span></dt>
+        <dd>
+          <span>{{ cmessage.isDelivered }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.cmessage.csender">Csender</span></dt>
+        <dd>
+          <div *ngIf="cmessage.csender">
+            <a [routerLink]="['/community', cmessage.csender?.id, 'view']">{{ cmessage.csender?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="dhApp.cmessage.creceiver">Creceiver</span></dt>
+        <dd>
+          <div *ngIf="cmessage.creceiver">
+            <a [routerLink]="['/community', cmessage.creceiver?.id, 'view']">{{ cmessage.creceiver?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/cmessage', cmessage.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
