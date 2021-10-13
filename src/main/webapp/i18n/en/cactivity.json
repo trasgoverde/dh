@@ -1,0 +1,26 @@
+{
+  "dhApp": {
+    "cactivity": {
+      "home": {
+        "title": "Cactivities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cactivity",
+        "createOrEditLabel": "Create or edit a Cactivity",
+        "search": "Search for Cactivity",
+        "notFound": "No Cactivities found"
+      },
+      "created": "A new Cactivity is created with identifier {{ param }}",
+      "updated": "A Cactivity is updated with identifier {{ param }}",
+      "deleted": "A Cactivity is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cactivity {{ id }}?"
+      },
+      "detail": {
+        "title": "Cactivity"
+      },
+      "id": "ID",
+      "activityName": "Activity Name",
+      "community": "Community"
+    }
+  }
+}

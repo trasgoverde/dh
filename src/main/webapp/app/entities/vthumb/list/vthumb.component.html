@@ -1,0 +1,145 @@
+<div>
+  <h2 id="page-heading" data-cy="VthumbHeading">
+    <span jhiTranslate="dhApp.vthumb.home.title">Vthumbs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="dhApp.vthumb.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-vthumb"
+        [routerLink]="['/vthumb/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="dhApp.vthumb.home.createLabel"> Create a new Vthumb </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'dhApp.vthumb.home.search' | translate }}"
+          />
+
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon icon="search"></fa-icon>
+          </button>
+
+          <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="vthumbs?.length === 0">
+    <span jhiTranslate="dhApp.vthumb.home.notFound">No vthumbs found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="vthumbs && vthumbs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="creationDate">
+            <span jhiTranslate="dhApp.vthumb.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="vthumbUp">
+            <span jhiTranslate="dhApp.vthumb.vthumbUp">Vthumb Up</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="vthumbDown">
+            <span jhiTranslate="dhApp.vthumb.vthumbDown">Vthumb Down</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="appuser.id">
+            <span jhiTranslate="dhApp.vthumb.appuser">Appuser</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="vquestion.id">
+            <span jhiTranslate="dhApp.vthumb.vquestion">Vquestion</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="vanswer.id">
+            <span jhiTranslate="dhApp.vthumb.vanswer">Vanswer</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vthumb of vthumbs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/vthumb', vthumb.id, 'view']">{{ vthumb.id }}</a>
+          </td>
+          <td>{{ vthumb.creationDate | formatMediumDatetime }}</td>
+          <td>{{ vthumb.vthumbUp }}</td>
+          <td>{{ vthumb.vthumbDown }}</td>
+          <td>
+            <div *ngIf="vthumb.appuser">
+              <a [routerLink]="['/appuser', vthumb.appuser?.id, 'view']">{{ vthumb.appuser?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="vthumb.vquestion">
+              <a [routerLink]="['/vquestion', vthumb.vquestion?.id, 'view']">{{ vthumb.vquestion?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="vthumb.vanswer">
+              <a [routerLink]="['/vanswer', vthumb.vanswer?.id, 'view']">{{ vthumb.vanswer?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/vthumb', vthumb.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/vthumb', vthumb.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(vthumb)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="vthumbs && vthumbs.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

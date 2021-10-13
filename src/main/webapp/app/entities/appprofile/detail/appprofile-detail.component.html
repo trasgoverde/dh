@@ -1,0 +1,126 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="appprofile">
+      <h2 data-cy="appprofileDetailsHeading"><span jhiTranslate="dhApp.appprofile.detail.title">Appprofile</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ appprofile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.creationDate">Creation Date</span></dt>
+        <dd>
+          <span>{{ appprofile.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.gender">Gender</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Gender.' + appprofile.gender }}">{{ appprofile.gender }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.phone">Phone</span></dt>
+        <dd>
+          <span>{{ appprofile.phone }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.bio">Bio</span></dt>
+        <dd>
+          <span>{{ appprofile.bio }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.facebook">Facebook</span></dt>
+        <dd>
+          <span>{{ appprofile.facebook }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.twitter">Twitter</span></dt>
+        <dd>
+          <span>{{ appprofile.twitter }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.linkedin">Linkedin</span></dt>
+        <dd>
+          <span>{{ appprofile.linkedin }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.instagram">Instagram</span></dt>
+        <dd>
+          <span>{{ appprofile.instagram }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.googlePlus">Google Plus</span></dt>
+        <dd>
+          <span>{{ appprofile.googlePlus }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.birthdate">Birthdate</span></dt>
+        <dd>
+          <span>{{ appprofile.birthdate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.civilStatus">Civil Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.CivilStatus.' + appprofile.civilStatus }}">{{ appprofile.civilStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.lookingFor">Looking For</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Gender.' + appprofile.lookingFor }}">{{ appprofile.lookingFor }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.purpose">Purpose</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Purpose.' + appprofile.purpose }}">{{ appprofile.purpose }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.physical">Physical</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Physical.' + appprofile.physical }}">{{ appprofile.physical }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.religion">Religion</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Religion.' + appprofile.religion }}">{{ appprofile.religion }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.ethnicGroup">Ethnic Group</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.EthnicGroup.' + appprofile.ethnicGroup }}">{{ appprofile.ethnicGroup }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.studies">Studies</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Studies.' + appprofile.studies }}">{{ appprofile.studies }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.sibblings">Sibblings</span></dt>
+        <dd>
+          <span>{{ appprofile.sibblings }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.eyes">Eyes</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Eyes.' + appprofile.eyes }}">{{ appprofile.eyes }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.smoker">Smoker</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Smoker.' + appprofile.smoker }}">{{ appprofile.smoker }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.children">Children</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.Children.' + appprofile.children }}">{{ appprofile.children }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.futureChildren">Future Children</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'dhApp.FutureChildren.' + appprofile.futureChildren }}">{{ appprofile.futureChildren }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.pet">Pet</span></dt>
+        <dd>
+          <span>{{ appprofile.pet }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.appprofile.appuser">Appuser</span></dt>
+        <dd>
+          <div *ngIf="appprofile.appuser">
+            <a [routerLink]="['/appuser', appprofile.appuser?.id, 'view']">{{ appprofile.appuser?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/appprofile', appprofile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

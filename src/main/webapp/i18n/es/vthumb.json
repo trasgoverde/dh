@@ -1,0 +1,30 @@
+{
+  "dhApp": {
+    "vthumb": {
+      "home": {
+        "title": "Vthumbs",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Vthumb",
+        "createOrEditLabel": "Crear o editar Vthumb",
+        "search": "Buscar Vthumb",
+        "notFound": "Ningún Vthumbs encontrado"
+      },
+      "created": "Un nuevo Vthumb ha sido creado con el identificador {{ param }}",
+      "updated": "Un Vthumb ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Vthumb ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Vthumb {{ id }}?"
+      },
+      "detail": {
+        "title": "Vthumb"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "vthumbUp": "Vthumb Up",
+      "vthumbDown": "Vthumb Down",
+      "appuser": "Appuser",
+      "vquestion": "Vquestion",
+      "vanswer": "Vanswer"
+    }
+  }
+}

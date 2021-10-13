@@ -1,0 +1,11 @@
+id;creation_date;proposal_name;proposal_type;proposal_role;release_date;is_open;is_accepted;is_paid
+1;2021-10-13T10:11:05;Coche;PRODUCTION;ADMIN;2021-10-13T13:58:11;false;true;true
+2;2021-10-12T20:21:27;payment copying Barein;STUDY;MANAGER;2021-10-13T13:51:36;false;true;false
+3;2021-10-13T08:49:55;Queso sensor;PRODUCTION;ADMIN;2021-10-13T03:53:31;true;false;true
+4;2021-10-13T10:10:32;Compartible card Azul;PRODUCTION;ADMIN;2021-10-13T03:31:51;false;false;false
+5;2021-10-13T14:13:14;revolutionize Platinum;DEVELOPMENT;USER;2021-10-12T17:15:39;false;true;false
+6;2021-10-13T00:28:56;mesh input;APPROVED;ORGANIZER;2021-10-13T00:37:17;false;true;false
+7;2021-10-13T05:27:18;parse Berkshire;DEVELOPMENT;ORGANIZER;2021-10-13T00:31:49;true;true;true
+8;2021-10-13T05:06:05;Indian bypassing Reactivo;PRODUCTION;ORGANIZER;2021-10-13T03:11:59;false;true;true
+9;2021-10-12T19:58:35;feed Planificador;PRODUCTION;ADMIN;2021-10-13T12:27:45;true;false;true
+10;2021-10-13T15:05:03;Terrenos desafío Mejorado;DEVELOPMENT;ORGANIZER;2021-10-12T18:12:50;true;true;true

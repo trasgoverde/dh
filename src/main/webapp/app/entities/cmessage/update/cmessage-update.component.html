@@ -1,0 +1,142 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-cmessage-heading" data-cy="CmessageCreateUpdateHeading" jhiTranslate="dhApp.cmessage.home.createOrEditLabel">
+        Create or edit a Cmessage
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.cmessage.creationDate" for="field_creationDate">Creation Date</label>
+          <div class="d-flex">
+            <input
+              id="field_creationDate"
+              data-cy="creationDate"
+              type="datetime-local"
+              class="form-control"
+              name="creationDate"
+              formControlName="creationDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="editForm.get('creationDate')!.invalid && (editForm.get('creationDate')!.dirty || editForm.get('creationDate')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('creationDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('creationDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.cmessage.messageText" for="field_messageText">Message Text</label>
+          <input
+            type="text"
+            class="form-control"
+            name="messageText"
+            id="field_messageText"
+            data-cy="messageText"
+            formControlName="messageText"
+          />
+          <div *ngIf="editForm.get('messageText')!.invalid && (editForm.get('messageText')!.dirty || editForm.get('messageText')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('messageText')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('messageText')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 2 }"
+            >
+              This field is required to be at least 2 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('messageText')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 8000 }"
+            >
+              This field cannot be longer than 8000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.cmessage.isDelivered" for="field_isDelivered">Is Delivered</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isDelivered"
+            id="field_isDelivered"
+            data-cy="isDelivered"
+            formControlName="isDelivered"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.cmessage.csender" for="field_csender">Csender</label>
+          <select class="form-control" id="field_csender" data-cy="csender" name="csender" formControlName="csender">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="communityOption.id === editForm.get('csender')!.value?.id ? editForm.get('csender')!.value : communityOption"
+              *ngFor="let communityOption of communitiesSharedCollection; trackBy: trackCommunityById"
+            >
+              {{ communityOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.cmessage.creceiver" for="field_creceiver">Creceiver</label>
+          <select class="form-control" id="field_creceiver" data-cy="creceiver" name="creceiver" formControlName="creceiver">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="communityOption.id === editForm.get('creceiver')!.value?.id ? editForm.get('creceiver')!.value : communityOption"
+              *ngFor="let communityOption of communitiesSharedCollection; trackBy: trackCommunityById"
+            >
+              {{ communityOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

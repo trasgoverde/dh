@@ -1,0 +1,414 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-appprofile-heading" data-cy="AppprofileCreateUpdateHeading" jhiTranslate="dhApp.appprofile.home.createOrEditLabel">
+        Create or edit a Appprofile
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.creationDate" for="field_creationDate">Creation Date</label>
+          <div class="d-flex">
+            <input
+              id="field_creationDate"
+              data-cy="creationDate"
+              type="datetime-local"
+              class="form-control"
+              name="creationDate"
+              formControlName="creationDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="editForm.get('creationDate')!.invalid && (editForm.get('creationDate')!.dirty || editForm.get('creationDate')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('creationDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('creationDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.gender" for="field_gender">Gender</label>
+          <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null">{{ 'dhApp.Gender.null' | translate }}</option>
+            <option value="MALE">{{ 'dhApp.Gender.MALE' | translate }}</option>
+            <option value="FEMALE">{{ 'dhApp.Gender.FEMALE' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.Gender.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.phone" for="field_phone">Phone</label>
+          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
+          <div *ngIf="editForm.get('phone')!.invalid && (editForm.get('phone')!.dirty || editForm.get('phone')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('phone')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 20 }"
+            >
+              This field cannot be longer than 20 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.bio" for="field_bio">Bio</label>
+          <input type="text" class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio" />
+          <div *ngIf="editForm.get('bio')!.invalid && (editForm.get('bio')!.dirty || editForm.get('bio')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bio')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 7500 }"
+            >
+              This field cannot be longer than 7500 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.facebook" for="field_facebook">Facebook</label>
+          <input type="text" class="form-control" name="facebook" id="field_facebook" data-cy="facebook" formControlName="facebook" />
+          <div *ngIf="editForm.get('facebook')!.invalid && (editForm.get('facebook')!.dirty || editForm.get('facebook')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('facebook')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.twitter" for="field_twitter">Twitter</label>
+          <input type="text" class="form-control" name="twitter" id="field_twitter" data-cy="twitter" formControlName="twitter" />
+          <div *ngIf="editForm.get('twitter')!.invalid && (editForm.get('twitter')!.dirty || editForm.get('twitter')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('twitter')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.linkedin" for="field_linkedin">Linkedin</label>
+          <input type="text" class="form-control" name="linkedin" id="field_linkedin" data-cy="linkedin" formControlName="linkedin" />
+          <div *ngIf="editForm.get('linkedin')!.invalid && (editForm.get('linkedin')!.dirty || editForm.get('linkedin')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('linkedin')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.instagram" for="field_instagram">Instagram</label>
+          <input type="text" class="form-control" name="instagram" id="field_instagram" data-cy="instagram" formControlName="instagram" />
+          <div *ngIf="editForm.get('instagram')!.invalid && (editForm.get('instagram')!.dirty || editForm.get('instagram')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('instagram')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.googlePlus" for="field_googlePlus">Google Plus</label>
+          <input
+            type="text"
+            class="form-control"
+            name="googlePlus"
+            id="field_googlePlus"
+            data-cy="googlePlus"
+            formControlName="googlePlus"
+          />
+          <div *ngIf="editForm.get('googlePlus')!.invalid && (editForm.get('googlePlus')!.dirty || editForm.get('googlePlus')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('googlePlus')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.birthdate" for="field_birthdate">Birthdate</label>
+          <div class="d-flex">
+            <input
+              id="field_birthdate"
+              data-cy="birthdate"
+              type="datetime-local"
+              class="form-control"
+              name="birthdate"
+              formControlName="birthdate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.civilStatus" for="field_civilStatus">Civil Status</label>
+          <select class="form-control" name="civilStatus" formControlName="civilStatus" id="field_civilStatus" data-cy="civilStatus">
+            <option [ngValue]="null">{{ 'dhApp.CivilStatus.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.CivilStatus.NA' | translate }}</option>
+            <option value="SINGLE">{{ 'dhApp.CivilStatus.SINGLE' | translate }}</option>
+            <option value="MARRIED">{{ 'dhApp.CivilStatus.MARRIED' | translate }}</option>
+            <option value="DIVORCED">{{ 'dhApp.CivilStatus.DIVORCED' | translate }}</option>
+            <option value="WIDOWER">{{ 'dhApp.CivilStatus.WIDOWER' | translate }}</option>
+            <option value="SEPARATED">{{ 'dhApp.CivilStatus.SEPARATED' | translate }}</option>
+            <option value="ENGAGED">{{ 'dhApp.CivilStatus.ENGAGED' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.CivilStatus.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.lookingFor" for="field_lookingFor">Looking For</label>
+          <select class="form-control" name="lookingFor" formControlName="lookingFor" id="field_lookingFor" data-cy="lookingFor">
+            <option [ngValue]="null">{{ 'dhApp.Gender.null' | translate }}</option>
+            <option value="MALE">{{ 'dhApp.Gender.MALE' | translate }}</option>
+            <option value="FEMALE">{{ 'dhApp.Gender.FEMALE' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.Gender.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.purpose" for="field_purpose">Purpose</label>
+          <select class="form-control" name="purpose" formControlName="purpose" id="field_purpose" data-cy="purpose">
+            <option [ngValue]="null">{{ 'dhApp.Purpose.null' | translate }}</option>
+            <option value="NOT_INTERESTED">{{ 'dhApp.Purpose.NOT_INTERESTED' | translate }}</option>
+            <option value="FRIENDSHIP">{{ 'dhApp.Purpose.FRIENDSHIP' | translate }}</option>
+            <option value="MEET_PEOPLE">{{ 'dhApp.Purpose.MEET_PEOPLE' | translate }}</option>
+            <option value="STABLE_RELATIONSHIP">{{ 'dhApp.Purpose.STABLE_RELATIONSHIP' | translate }}</option>
+            <option value="MARRIAGE">{{ 'dhApp.Purpose.MARRIAGE' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.Purpose.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.physical" for="field_physical">Physical</label>
+          <select class="form-control" name="physical" formControlName="physical" id="field_physical" data-cy="physical">
+            <option [ngValue]="null">{{ 'dhApp.Physical.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.Physical.NA' | translate }}</option>
+            <option value="THIN">{{ 'dhApp.Physical.THIN' | translate }}</option>
+            <option value="ATHLETIC">{{ 'dhApp.Physical.ATHLETIC' | translate }}</option>
+            <option value="NORMAL">{{ 'dhApp.Physical.NORMAL' | translate }}</option>
+            <option value="CORPULENT">{{ 'dhApp.Physical.CORPULENT' | translate }}</option>
+            <option value="BULKY">{{ 'dhApp.Physical.BULKY' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.Physical.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.religion" for="field_religion">Religion</label>
+          <select class="form-control" name="religion" formControlName="religion" id="field_religion" data-cy="religion">
+            <option [ngValue]="null">{{ 'dhApp.Religion.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.Religion.NA' | translate }}</option>
+            <option value="ATHEIST">{{ 'dhApp.Religion.ATHEIST' | translate }}</option>
+            <option value="AGNOSTIC">{{ 'dhApp.Religion.AGNOSTIC' | translate }}</option>
+            <option value="CATHOLIC">{{ 'dhApp.Religion.CATHOLIC' | translate }}</option>
+            <option value="JEWISH">{{ 'dhApp.Religion.JEWISH' | translate }}</option>
+            <option value="ISLAMIC">{{ 'dhApp.Religion.ISLAMIC' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.Religion.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.ethnicGroup" for="field_ethnicGroup">Ethnic Group</label>
+          <select class="form-control" name="ethnicGroup" formControlName="ethnicGroup" id="field_ethnicGroup" data-cy="ethnicGroup">
+            <option [ngValue]="null">{{ 'dhApp.EthnicGroup.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.EthnicGroup.NA' | translate }}</option>
+            <option value="MIXED">{{ 'dhApp.EthnicGroup.MIXED' | translate }}</option>
+            <option value="WHITE">{{ 'dhApp.EthnicGroup.WHITE' | translate }}</option>
+            <option value="LATIN">{{ 'dhApp.EthnicGroup.LATIN' | translate }}</option>
+            <option value="GYPSY">{{ 'dhApp.EthnicGroup.GYPSY' | translate }}</option>
+            <option value="AFRO">{{ 'dhApp.EthnicGroup.AFRO' | translate }}</option>
+            <option value="HINDU">{{ 'dhApp.EthnicGroup.HINDU' | translate }}</option>
+            <option value="ARAB">{{ 'dhApp.EthnicGroup.ARAB' | translate }}</option>
+            <option value="ASIAN">{{ 'dhApp.EthnicGroup.ASIAN' | translate }}</option>
+            <option value="INDIAN">{{ 'dhApp.EthnicGroup.INDIAN' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.EthnicGroup.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.studies" for="field_studies">Studies</label>
+          <select class="form-control" name="studies" formControlName="studies" id="field_studies" data-cy="studies">
+            <option [ngValue]="null">{{ 'dhApp.Studies.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.Studies.NA' | translate }}</option>
+            <option value="PRIMARY">{{ 'dhApp.Studies.PRIMARY' | translate }}</option>
+            <option value="HIGH_SCHOOL">{{ 'dhApp.Studies.HIGH_SCHOOL' | translate }}</option>
+            <option value="TECHNICAL">{{ 'dhApp.Studies.TECHNICAL' | translate }}</option>
+            <option value="COLLEGE">{{ 'dhApp.Studies.COLLEGE' | translate }}</option>
+            <option value="MASTER">{{ 'dhApp.Studies.MASTER' | translate }}</option>
+            <option value="DOCTORATE">{{ 'dhApp.Studies.DOCTORATE' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.Studies.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.sibblings" for="field_sibblings">Sibblings</label>
+          <input type="number" class="form-control" name="sibblings" id="field_sibblings" data-cy="sibblings" formControlName="sibblings" />
+          <div *ngIf="editForm.get('sibblings')!.invalid && (editForm.get('sibblings')!.dirty || editForm.get('sibblings')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sibblings')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: -1 }"
+            >
+              This field should be at least -1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('sibblings')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+            >
+              This field cannot be more than 20.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('sibblings')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.eyes" for="field_eyes">Eyes</label>
+          <select class="form-control" name="eyes" formControlName="eyes" id="field_eyes" data-cy="eyes">
+            <option [ngValue]="null">{{ 'dhApp.Eyes.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.Eyes.NA' | translate }}</option>
+            <option value="BLUE">{{ 'dhApp.Eyes.BLUE' | translate }}</option>
+            <option value="GREEN">{{ 'dhApp.Eyes.GREEN' | translate }}</option>
+            <option value="BROWN">{{ 'dhApp.Eyes.BROWN' | translate }}</option>
+            <option value="BLACK">{{ 'dhApp.Eyes.BLACK' | translate }}</option>
+            <option value="CHESTNUT">{{ 'dhApp.Eyes.CHESTNUT' | translate }}</option>
+            <option value="OTHER">{{ 'dhApp.Eyes.OTHER' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.smoker" for="field_smoker">Smoker</label>
+          <select class="form-control" name="smoker" formControlName="smoker" id="field_smoker" data-cy="smoker">
+            <option [ngValue]="null">{{ 'dhApp.Smoker.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.Smoker.NA' | translate }}</option>
+            <option value="YES">{{ 'dhApp.Smoker.YES' | translate }}</option>
+            <option value="NO">{{ 'dhApp.Smoker.NO' | translate }}</option>
+            <option value="OCCASIONALLY">{{ 'dhApp.Smoker.OCCASIONALLY' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.children" for="field_children">Children</label>
+          <select class="form-control" name="children" formControlName="children" id="field_children" data-cy="children">
+            <option [ngValue]="null">{{ 'dhApp.Children.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.Children.NA' | translate }}</option>
+            <option value="YES">{{ 'dhApp.Children.YES' | translate }}</option>
+            <option value="NO">{{ 'dhApp.Children.NO' | translate }}</option>
+            <option value="GREATER_THAN_18">{{ 'dhApp.Children.GREATER_THAN_18' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.futureChildren" for="field_futureChildren"
+            >Future Children</label
+          >
+          <select
+            class="form-control"
+            name="futureChildren"
+            formControlName="futureChildren"
+            id="field_futureChildren"
+            data-cy="futureChildren"
+          >
+            <option [ngValue]="null">{{ 'dhApp.FutureChildren.null' | translate }}</option>
+            <option value="NA">{{ 'dhApp.FutureChildren.NA' | translate }}</option>
+            <option value="YES">{{ 'dhApp.FutureChildren.YES' | translate }}</option>
+            <option value="NO">{{ 'dhApp.FutureChildren.NO' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.pet" for="field_pet">Pet</label>
+          <input type="checkbox" class="form-check" name="pet" id="field_pet" data-cy="pet" formControlName="pet" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.appprofile.appuser" for="field_appuser">Appuser</label>
+          <select class="form-control" id="field_appuser" data-cy="appuser" name="appuser" formControlName="appuser">
+            <option *ngIf="editForm.get(['appuser'])!.value == null" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="appuserOption.id === editForm.get('appuser')!.value?.id ? editForm.get('appuser')!.value : appuserOption"
+              *ngFor="let appuserOption of appusersCollection; trackBy: trackAppuserById"
+            >
+              {{ appuserOption.id }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['appuser'])!.invalid && (editForm.get(['appuser'])!.dirty || editForm.get(['appuser'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['appuser'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

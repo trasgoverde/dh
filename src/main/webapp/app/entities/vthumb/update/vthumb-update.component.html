@@ -1,0 +1,132 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-vthumb-heading" data-cy="VthumbCreateUpdateHeading" jhiTranslate="dhApp.vthumb.home.createOrEditLabel">
+        Create or edit a Vthumb
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.vthumb.creationDate" for="field_creationDate">Creation Date</label>
+          <div class="d-flex">
+            <input
+              id="field_creationDate"
+              data-cy="creationDate"
+              type="datetime-local"
+              class="form-control"
+              name="creationDate"
+              formControlName="creationDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="editForm.get('creationDate')!.invalid && (editForm.get('creationDate')!.dirty || editForm.get('creationDate')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('creationDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('creationDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.vthumb.vthumbUp" for="field_vthumbUp">Vthumb Up</label>
+          <input type="checkbox" class="form-check" name="vthumbUp" id="field_vthumbUp" data-cy="vthumbUp" formControlName="vthumbUp" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.vthumb.vthumbDown" for="field_vthumbDown">Vthumb Down</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="vthumbDown"
+            id="field_vthumbDown"
+            data-cy="vthumbDown"
+            formControlName="vthumbDown"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.vthumb.appuser" for="field_appuser">Appuser</label>
+          <select class="form-control" id="field_appuser" data-cy="appuser" name="appuser" formControlName="appuser">
+            <option *ngIf="!editForm.get('appuser')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="appuserOption.id === editForm.get('appuser')!.value?.id ? editForm.get('appuser')!.value : appuserOption"
+              *ngFor="let appuserOption of appusersSharedCollection; trackBy: trackAppuserById"
+            >
+              {{ appuserOption.id }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['appuser'])!.invalid && (editForm.get(['appuser'])!.dirty || editForm.get(['appuser'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['appuser'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.vthumb.vquestion" for="field_vquestion">Vquestion</label>
+          <select class="form-control" id="field_vquestion" data-cy="vquestion" name="vquestion" formControlName="vquestion">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="vquestionOption.id === editForm.get('vquestion')!.value?.id ? editForm.get('vquestion')!.value : vquestionOption"
+              *ngFor="let vquestionOption of vquestionsSharedCollection; trackBy: trackVquestionById"
+            >
+              {{ vquestionOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="dhApp.vthumb.vanswer" for="field_vanswer">Vanswer</label>
+          <select class="form-control" id="field_vanswer" data-cy="vanswer" name="vanswer" formControlName="vanswer">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="vanswerOption.id === editForm.get('vanswer')!.value?.id ? editForm.get('vanswer')!.value : vanswerOption"
+              *ngFor="let vanswerOption of vanswersSharedCollection; trackBy: trackVanswerById"
+            >
+              {{ vanswerOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

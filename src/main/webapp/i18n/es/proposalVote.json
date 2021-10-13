@@ -1,0 +1,28 @@
+{
+  "dhApp": {
+    "proposalVote": {
+      "home": {
+        "title": "Proposal Votes",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Proposal Vote",
+        "createOrEditLabel": "Crear o editar Proposal Vote",
+        "search": "Buscar Proposal Vote",
+        "notFound": "Ningún Proposal Votes encontrado"
+      },
+      "created": "Un nuevo Proposal Vote ha sido creado con el identificador {{ param }}",
+      "updated": "Un Proposal Vote ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Proposal Vote ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Proposal Vote {{ id }}?"
+      },
+      "detail": {
+        "title": "Proposal Vote"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "votePoints": "Vote Points",
+      "appuser": "Appuser",
+      "proposal": "Proposal"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="calbum">
+      <h2 data-cy="calbumDetailsHeading"><span jhiTranslate="dhApp.calbum.detail.title">Calbum</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ calbum.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.calbum.creationDate">Creation Date</span></dt>
+        <dd>
+          <span>{{ calbum.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.calbum.title">Title</span></dt>
+        <dd>
+          <span>{{ calbum.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="dhApp.calbum.community">Community</span></dt>
+        <dd>
+          <div *ngIf="calbum.community">
+            <a [routerLink]="['/community', calbum.community?.id, 'view']">{{ calbum.community?.communityName }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/calbum', calbum.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

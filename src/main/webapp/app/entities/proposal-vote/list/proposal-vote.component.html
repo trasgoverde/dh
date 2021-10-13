@@ -1,0 +1,143 @@
+<div>
+  <h2 id="page-heading" data-cy="ProposalVoteHeading">
+    <span jhiTranslate="dhApp.proposalVote.home.title">Proposal Votes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="dhApp.proposalVote.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-proposal-vote"
+        [routerLink]="['/proposal-vote/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span class="hidden-sm-down" jhiTranslate="dhApp.proposalVote.home.createLabel"> Create a new Proposal Vote </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'dhApp.proposalVote.home.search' | translate }}"
+          />
+
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon icon="search"></fa-icon>
+          </button>
+
+          <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="proposalVotes?.length === 0">
+    <span jhiTranslate="dhApp.proposalVote.home.notFound">No proposalVotes found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="proposalVotes && proposalVotes.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="creationDate">
+            <span jhiTranslate="dhApp.proposalVote.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="votePoints">
+            <span jhiTranslate="dhApp.proposalVote.votePoints">Vote Points</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="appuser.id">
+            <span jhiTranslate="dhApp.proposalVote.appuser">Appuser</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="proposal.id">
+            <span jhiTranslate="dhApp.proposalVote.proposal">Proposal</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proposalVote of proposalVotes; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/proposal-vote', proposalVote.id, 'view']">{{ proposalVote.id }}</a>
+          </td>
+          <td>{{ proposalVote.creationDate | formatMediumDatetime }}</td>
+          <td>{{ proposalVote.votePoints }}</td>
+          <td>
+            <div *ngIf="proposalVote.appuser">
+              <a [routerLink]="['/appuser', proposalVote.appuser?.id, 'view']">{{ proposalVote.appuser?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="proposalVote.proposal">
+              <a [routerLink]="['/proposal', proposalVote.proposal?.id, 'view']">{{ proposalVote.proposal?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/proposal-vote', proposalVote.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/proposal-vote', proposalVote.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(proposalVote)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="proposalVotes && proposalVotes.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
